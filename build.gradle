@@ -1,0 +1,38 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.0'
+        classpath 'me.champeau.gradle:jmh-gradle-plugin:0.2.0'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'me.champeau.gradle.jmh'
+
+
+group = 'net.chromarenderer.benchmarks'
+version = '0.0.1-SNAPSHOT'
+
+
+jmh {
+    resultFormat = 'JSON'
+    jmhVersion = '1.6.1' // Specifies JMH version
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(":chromarenderer-java")
+}
