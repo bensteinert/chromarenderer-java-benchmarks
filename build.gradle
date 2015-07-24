@@ -1,28 +1,23 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url "http://dl.bintray.com/comsysto/crolabefra"
+        }
     }
 
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.0'
-        classpath 'me.champeau.gradle:jmh-gradle-plugin:0.2.0'
+        classpath 'com.comsysto.gradle:crolabefra-java-plugin:+'
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'me.champeau.gradle.jmh'
+apply plugin: 'com.comsysto.gradle.crolabefra.java'
 
 
 group = 'net.chromarenderer.benchmarks'
 version = '0.0.1-SNAPSHOT'
-
-
-jmh {
-    resultFormat = 'JSON'
-    jmhVersion = '1.6.1' // Specifies JMH version
-}
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 
