@@ -1,20 +1,7 @@
-buildscript {
-    repositories {
-        jcenter()
-        maven {
-            url "http://dl.bintray.com/comsysto/crolabefra"
-        }
-    }
-
-    dependencies {
-        classpath 'com.comsysto.gradle:crolabefra-java-plugin:+'
-    }
+plugins {
+    id "com.comsysto.gradle.crolabefra.java" version "0.1.0"
+    id "idea"
 }
-
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'com.comsysto.gradle.crolabefra.java'
-
 
 group = 'net.chromarenderer.benchmarks'
 version = '0.0.1-SNAPSHOT'
