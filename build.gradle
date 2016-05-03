@@ -16,5 +16,5 @@ repositories {
 }
 
 dependencies {
-    compile project(":chromarenderer-java")
+    jmh project(":chromarenderer-java")
 }
