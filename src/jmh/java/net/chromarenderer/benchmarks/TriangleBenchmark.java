@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.SingleShotTime)
 @Fork(value = 1)
 @Measurement(batchSize = 1000000, iterations = 100)
-public class MoellerTrumboreTriangleIntersectionBenchmark {
+public class TriangleBenchmark {
 
     private static SimpleTriangle TRIANGLE = new SimpleTriangle(
             new ImmutableVector3(0.f, 0.f, 1.f),    //x
@@ -40,9 +40,13 @@ public class MoellerTrumboreTriangleIntersectionBenchmark {
     }
 
 
-    @Benchmark
-    public float benchmarkMoellerTrumboreObjectLayoutTriangleIntersect() {
-        return OBJECT_TRIANGLE.intersect(RAY);
-    }
+//    @Benchmark
+//    public float benchmarkMoellerTrumboreObjectLayoutTriangleIntersect() {
+//        return OBJECT_TRIANGLE.intersect(RAY);
+//    }
 
+    @Benchmark
+    public ImmutableVector3 benchmarkGetUnifDistSampleOnTriangle(){
+        return TRIANGLE.getUnifDistrSample();
+    }
 }

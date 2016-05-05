@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @Measurement(batchSize = 1000000, iterations = 100)
 public class BenchmarkAxisAlignedBoundingBoxIntersection {
 
-    private static final AxisAlignedBoundingBox bBox = new AxisAlignedBoundingBox(Vector3.ORIGIN, Vector3.ONE);
+    private static AxisAlignedBoundingBox bBox = new AxisAlignedBoundingBox(Vector3.ORIGIN, Vector3.ONE);
     private static Ray ray = new Ray(new ImmutableVector3(0.5f, 0.5f, 2.f), new ImmutableVector3(0.f, 0.f, -1.f));
     private static IntersectionContext ctx = new IntersectionContext();
 
