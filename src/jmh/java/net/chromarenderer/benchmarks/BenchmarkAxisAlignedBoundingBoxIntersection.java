@@ -11,6 +11,9 @@ import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,14 +24,16 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.SingleShotTime)
 @Fork(value = 1)
 @Measurement(batchSize = 1000000, iterations = 100)
+@State(Scope.Benchmark)
 public class BenchmarkAxisAlignedBoundingBoxIntersection {
 
-    private static AxisAlignedBoundingBox bBox = new AxisAlignedBoundingBox(Vector3.ORIGIN, Vector3.ONE);
-    private static Ray ray = new Ray(new ImmutableVector3(0.5f, 0.5f, 2.f), new ImmutableVector3(0.f, 0.f, -1.f));
-    private static IntersectionContext ctx = new IntersectionContext();
+    private AxisAlignedBoundingBox bBox;
+    private IntersectionContext ctx;
 
-    static {
-        ray = new Ray(new ImmutableVector3(0.5f, 0.5f, 2.f), new ImmutableVector3(0.f, 0.f, -1.f));
+    @Setup
+    public void setup(){
+        bBox = new AxisAlignedBoundingBox(Vector3.ORIGIN, Vector3.ONE);
+        Ray ray = new Ray(new ImmutableVector3(0.5f, 0.5f, 2.f), new ImmutableVector3(0.f, 0.f, -1.f));
         ctx = new IntersectionContext();
         ctx.reinit(ray);
     }
