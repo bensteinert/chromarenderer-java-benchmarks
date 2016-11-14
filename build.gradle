@@ -18,3 +18,7 @@ repositories {
 dependencies {
     jmh project(":chromarenderer-java")
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.14.1'
+}
