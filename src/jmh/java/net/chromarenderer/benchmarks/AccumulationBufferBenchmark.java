@@ -2,6 +2,7 @@ package net.chromarenderer.benchmarks;
 
 import net.chromarenderer.math.random.MersenneTwisterFast;
 import net.chromarenderer.renderer.canvas.ChromaCanvas;
+import net.chromarenderer.renderer.canvas.ParallelStreamAccumulationBuffer;
 import net.chromarenderer.renderer.canvas.SingleThreadedAccumulationBuffer;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -22,12 +23,13 @@ import java.util.concurrent.TimeUnit;
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @BenchmarkMode(Mode.SingleShotTime)
 @Fork(value = 1)
-@Measurement(batchSize = 100, iterations = 100)
+@Measurement(iterations = 100, batchSize = 1)
 @State(Scope.Thread)
 public class AccumulationBufferBenchmark {
 
     private MersenneTwisterFast mt;
-    private SingleThreadedAccumulationBuffer accBuff;
+    private SingleThreadedAccumulationBuffer sTAccBuff;
+    private ParallelStreamAccumulationBuffer mTAccBuff;
     private ChromaCanvas image;
 
 
@@ -35,7 +37,8 @@ public class AccumulationBufferBenchmark {
     public void setup() {
         mt = new MersenneTwisterFast(13499);
         image = new ChromaCanvas(1024, 1024);
-        accBuff = new SingleThreadedAccumulationBuffer(1024, 1024);
+        sTAccBuff = new SingleThreadedAccumulationBuffer(1024, 1024);
+        mTAccBuff = new ParallelStreamAccumulationBuffer(1024, 1024);
         Arrays.stream(image.getPixels()).forEach(pixel -> {
             pixel.set(mt.nextFloat(), mt.nextFloat(), mt.nextFloat());
         });
@@ -43,8 +46,13 @@ public class AccumulationBufferBenchmark {
 
 
     @Benchmark
-    public SingleThreadedAccumulationBuffer accumulate() {
-        return accBuff.accumulate(image.getPixels());
+    public SingleThreadedAccumulationBuffer accumulateSingleThreaded() {
+        return sTAccBuff.accumulate(image.getPixels());
+    }
+
+    @Benchmark
+    public SingleThreadedAccumulationBuffer accumulateMultiThreaded() {
+        return mTAccBuff.accumulate(image.getPixels());
     }
 
 }
